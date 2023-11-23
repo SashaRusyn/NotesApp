@@ -1,12 +1,19 @@
 <template>
     <div class="note">
-        <div class="note__head">
-            <h2 class="title">{{ note.title }}</h2>
-            <p class="body">{{ note.body }}</p>
+        <div class="details">
+            <p class="title">{{ note.title }}</p>
+            <span class="body">{{ note.body }}</span>
         </div>
-        <div class="note__foot">
-            <hr>
-            <p class="date">note.id</p>
+        <div class="bottom-content">
+            <span>{{ new Date(note.date).toLocaleDateString('en-us', { day: "numeric", year: "numeric", month: "long" })
+            }}</span>
+            <div class="settings">
+                <i class="uil uil-ellipsis-h"></i>
+                <ul class="menu">
+                    <li><i class="uil uil-pen"></i>Edit</li>
+                    <li @click="$emit('remove', note)"><i class="uil uil-trash"></i>Delete</li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -18,33 +25,91 @@ export default {
             type: Object,
             require: true,
         }
+    },
+    methods: {
+        removeNote() {
+            this.$emit('remove', note);
+        }
     }
 }
 </script>
 
 <style scoped>
 .note {
-    background-color: white;
-    padding: 20px;
-    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 10px;
+    width: 100%;
 }
 
-.note__head,
-.note__foot {
+.note p {
+    font-style: 22px;
+    font-weight: 500;
+}
+
+.note span {
+    display: block;
+    margin-top: 5px;
+    color: #575757;
+    font-style: 16px;
+}
+
+.note .bottom-content {
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.title {
-    font-size: 24px;
+.bottom-content span {
+    color: #6d6d6d;
+    font-style: 14px;
 }
 
-.body {
-    font-size: 16px;
+.bottom-content .settings i {
+    color: #6d6d6d;
+    font-style: 15px;
+    cursor: pointer;
+}
+
+.settings {
+    position: relative;
+}
+
+.settings .menu {
+    position: absolute;
+    bottom: 0;
+    padding: 5px 0;
+    background: #fff;
+    border-radius: 4px;
+    transform: scale(0);
+    transform-origin: top left;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease;
+}
+
+.settings:hover .menu {
+    transform: scale(1);
+}
+
+.settings .menu li {
+    height: 25px;
+    font-style: 16px;
+    cursor: pointer;
+    border-radius: 0;
+    padding: 17px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    justify-content: flex-start;
+}
+
+.menu li:hover {
+    background: #f5f5f5;
+}
+
+.menu li i {
+    padding-right: 8px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="add-box">
-        <div class="icon">+</div>
+        <div class="icon"><i class="uil uil-plus"></i></div>
         <p>Add new notes</p>
     </div>
 </template>
@@ -12,28 +12,30 @@ export default {
 
 <style scoped>
 .add-box {
-    border-radius: 10px;
-    color: #00b0ff;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    height: 250px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    padding: 0 20px;
+    width: 100%;
 }
 
+.add-box,
 .icon {
-    border: 2px dashed #00b0ff;
-    border-radius: 50%;
-    width: 78px;
-    height: 78px;
-    display: inherit;
-    justify-content: center;
+    display: flex;
     align-items: center;
-    font-size: 45px;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-box .icon {
+    height: 78px;
+    width: 78px;
+    color: #88ABFF;
+    font-size: 40px;
+    border-radius: 50%;
+    border: 2px dashed #88ABFF;
+}
+
+.add-box p {
+    color: #88ABFF;
     font-weight: 500;
+    margin-top: 20px;
 }
 </style>

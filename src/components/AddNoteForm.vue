@@ -1,41 +1,73 @@
 <template>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <form class="form" @submit.prevent>
-        <div class="form__header">
-            <p>Add a new Note</p>
-            <!-- <i class="fa-solid fa-xmark" :click="hideDialog"></i> -->
+    <div class="dialog" @click="hideDialog" v-if="show">
+        <div class="dialog__content" @click.stop>
+            <form class="form" @submit.prevent>
+                <div class="form__header">
+                    <p>Add a new Note</p>
+                    <i class="fa-solid fa-xmark" @click="hideDialog"></i>
+                </div>
+                <input type="text" v-bind:value="note.title" @input="note.title = $event.target.value" placeholder="Title">
+                <textarea cols="30" rows="10" v-bind:value="note.body" @input="note.body = $event.target.value"
+                    placeholder="Body"></textarea>
+                <button class="form__button" @click="createNote">Add Note</button>
+            </form>
         </div>
-        <input type="text" v-bind:value="note.title" @input="note.title = $event.target.value" placeholder="Title">
-        <textarea cols="30" rows="10" v-bind:value="note.body" @input="note.body = $event.target.value"
-            placeholder="Body"></textarea>
-        <button class="form__button" @click="createNote">Add Note</button>
-    </form>
+    </div>
 </template>
 
 <script>
 export default {
+    props: {
+        show: {
+            type: Boolean,
+            default: false,
+        }
+    },
     data() {
         return {
             note: {
                 title: '',
                 body: '',
-            }
+            },
         }
     },
     methods: {
         createNote() {
-            this.note.id = Date.now();
+            this.note.date = Date.now();
+            this.note.id = this.note.date;
             this.$emit('create', this.note);
             this.note = {
                 title: '',
                 body: '',
             }
         },
+        hideDialog() {
+            this.$emit('update:show', false);
+            console.log(this.show);
+        }
     }
 }
 </script>
 
 <style scoped>
+.dialog {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.dialog__content {
+    border-radius: 8px;
+    background: #fff;
+}
+
 textarea {
     resize: none;
 }
