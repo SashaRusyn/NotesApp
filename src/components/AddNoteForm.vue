@@ -9,7 +9,7 @@
                 <input type="text" v-bind:value="note.title" @input="note.title = $event.target.value" placeholder="Title">
                 <textarea cols="30" rows="10" v-bind:value="note.body" @input="note.body = $event.target.value"
                     placeholder="Body"></textarea>
-                <button class="form__button" @click="createNote">Add Note</button>
+                <my-button @click="createNote">Add Note</my-button>
             </form>
         </div>
     </div>
@@ -35,15 +35,20 @@ export default {
         createNote() {
             this.note.date = Date.now();
             this.note.id = this.note.date;
-            this.$emit('create', this.note);
+            if (this.note.title.trim().length != 0 && this.note.body.trim().length != 0) {
+                this.$emit('create', this.note);
+                this.note = {
+                    title: '',
+                    body: '',
+                }
+            }
+        },
+        hideDialog() {
             this.note = {
                 title: '',
                 body: '',
             }
-        },
-        hideDialog() {
             this.$emit('update:show', false);
-            console.log(this.show);
         }
     }
 }
@@ -92,15 +97,5 @@ textarea {
     border: 1px solid #a0a0a0;
     border-radius: 5px;
     padding: .5rem;
-}
-
-.form__button {
-    color: white;
-    background-color: #00b0ff;
-    padding: .5rem;
-    border-radius: 5px;
-    outline: none;
-    border: none;
-    cursor: pointer;
 }
 </style>

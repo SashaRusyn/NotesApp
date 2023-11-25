@@ -10,7 +10,7 @@
             <div class="settings">
                 <i class="uil uil-ellipsis-h"></i>
                 <ul class="menu">
-                    <li><i class="uil uil-pen"></i>Edit</li>
+                    <li @click="$emit('edit', note)"><i class="uil uil-pen"></i>Edit</li>
                     <li @click="$emit('remove', note)"><i class="uil uil-trash"></i>Delete</li>
                 </ul>
             </div>
@@ -26,11 +26,6 @@ export default {
             require: true,
         }
     },
-    methods: {
-        removeNote() {
-            this.$emit('remove', note);
-        }
-    }
 }
 </script>
 
@@ -40,6 +35,20 @@ export default {
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    overflow-y: scroll;
+}
+
+.note::-webkit-scrollbar {
+    width: 5px;
+}
+
+.note::-webkit-scrollbar-track {
+    background: none;
+}
+
+.note::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
 }
 
 .note p {
